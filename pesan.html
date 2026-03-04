@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CableMate — Pesan & Kontak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --cream: #faf9f7; --light: #f3f2ef;
+      --border: #e8e5e0; --border2: #d0cdc7;
+      --text: #1a1917; --mid: #5a5854; --muted: #9a9692;
+      --accent: #e85d04; --accent-h: #cc4f00;
+      --accent-light: #fff4ee; --accent-gold: #fd8c00;
+      --green: #2d6a4f; --green-light: #edf7f2;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+      --r: 16px;
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--white); color: var(--text); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 68px;
+      background: rgba(255,255,255,0.93); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: var(--font-d); font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 0.3rem; list-style: none; background: var(--light); padding: 0.3rem; border-radius: 100px; }
+    .nav-links a { display: block; padding: 0.45rem 1.1rem; border-radius: 100px; font-size: 0.84rem; font-weight: 600; color: var(--mid); text-decoration: none; transition: all 0.22s; }
+    .nav-links a:hover { color: var(--text); background: var(--white); }
+    .nav-links a.active { background: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(232,93,4,0.3); }
+    .nav-cta { background: var(--text); color: var(--white); font-weight: 700; font-size: 0.84rem; padding: 0.55rem 1.4rem; border-radius: 100px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--cream); padding: 120px 6vw 60px;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, #c8c5be 1px, transparent 1px);
+      background-size: 32px 32px; opacity: 0.4; pointer-events: none;
+    }
+    .page-header-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .page-title { font-family: var(--font-d); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; letter-spacing: -1.5px; }
+    .page-title span { color: var(--accent); font-style: italic; }
+    .page-sub { font-size: 1rem; color: var(--mid); margin-top: 0.8rem; max-width: 480px; line-height: 1.7; }
+
+    /* ── SECTION ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      font-weight: 700; color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .section-label::before { content: ''; width: 20px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; }
+
+    /* ── TESTIMONI ── */
+    .testi-section { padding: 80px 6vw; background: var(--white); }
+    .testi-inner { max-width: 1200px; margin: 0 auto; }
+    .testi-top-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; }
+    .score-block { display: flex; align-items: center; gap: 1rem; }
+    .score-big { font-family: var(--font-d); font-size: 3.5rem; font-weight: 900; line-height: 1; }
+    .score-stars { color: #f59e0b; font-size: 1.1rem; }
+    .score-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .testi-card { background: var(--cream); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: transform 0.3s, box-shadow 0.3s; }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .testi-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .testi-stars { color: #f59e0b; font-size: 0.85rem; }
+    .testi-text { font-size: 0.88rem; color: var(--mid); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+    .testi-text::before { content: '\201C'; font-size: 1.5rem; color: var(--accent); vertical-align: -0.4rem; margin-right: 2px; font-family: var(--font-d); }
+    .testi-text::after  { content: '\201D'; font-size: 1.5rem; color: var(--accent); vertical-align: -0.4rem; margin-left: 2px; font-family: var(--font-d); }
+    .testi-name { font-size: 0.84rem; font-weight: 700; }
+    .testi-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── FORM & KONTAK ── */
+    .form-section { padding: 80px 6vw; background: var(--cream); }
+    .form-inner { max-width: 1200px; margin: 0 auto; }
+    .form-kontak-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+
+    .form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 2.4rem; box-shadow: var(--shadow-sm); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--mid); margin-bottom: 0.42rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--border); border-radius: 10px; font-family: var(--font-b); font-size: 0.9rem; color: var(--text); background: var(--cream); transition: border-color 0.2s, box-shadow 0.2s; outline: none; resize: none; appearance: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,93,4,0.08); }
+    .form-submit { width: 100%; background: var(--accent); color: #fff; font-family: var(--font-b); font-weight: 700; font-size: 0.93rem; padding: 0.95rem; border-radius: 12px; border: none; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(232,93,4,0.25); }
+    .form-submit:hover { background: var(--accent-h); transform: translateY(-1px); }
+    .form-success { display: none; background: var(--green-light); border: 1px solid rgba(45,106,79,0.2); border-radius: 10px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.86rem; color: var(--green); font-weight: 600; text-align: center; }
+
+    .info-side { display: flex; flex-direction: column; gap: 1.1rem; }
+    .info-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 1.4rem 1.6rem; display: flex; align-items: center; gap: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .info-card:hover { transform: translateX(5px); box-shadow: var(--shadow-sm); }
+    .info-icon { width: 46px; height: 46px; flex-shrink: 0; background: var(--accent-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+    .info-title { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 600; }
+    .info-val { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-top: 0.2rem; }
+    .info-val a { color: var(--accent); text-decoration: none; }
+    .info-val a:hover { text-decoration: underline; }
+
+    .hours-card { background: var(--text); color: var(--white); border-radius: var(--r); padding: 1.5rem 1.6rem; }
+    .hours-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; margin-bottom: 0.7rem; }
+    .hours-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .hours-row .day { opacity: 0.65; }
+    .hours-row .time { font-weight: 600; color: var(--accent-gold); }
+
+    .info-note { background: var(--green-light); border: 1px solid rgba(45,106,79,0.18); border-radius: 10px; padding: 1rem 1.2rem; display: flex; gap: 0.7rem; }
+    .info-note .ni { font-size: 1rem; flex-shrink: 0; }
+    .info-note p { font-size: 0.8rem; color: var(--green); line-height: 1.6; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-l { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-r { opacity: 0; transform: translateX(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible, .reveal-l.visible, .reveal-r.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    footer { background: #111; color: var(--white); padding: 48px 6vw 28px; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-logo { font-family: var(--font-d); font-size: 1.5rem; font-weight: 900; }
+    .footer-logo span { color: var(--accent-gold); }
+    .footer-brand p { margin-top: 0.7rem; font-size: 0.86rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.1rem; font-weight: 700; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.86rem; margin-bottom: 0.6rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent-gold); }
+    .footer-bottom { padding-top: 1.6rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.28); }
+    .footer-bottom a { color: var(--accent-gold); text-decoration: none; }
+
+    @media (max-width: 960px) {
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      .form-kontak-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .testi-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Cable<span>Mate</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="produk.html">📦 Produk</a></li>
+    <li><a href="pesan.html" class="active">📋 Pesan</a></li>
+  </ul>
+  <a href="pesan.html" class="nav-cta">Pesan Sekarang</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> › Pesan & Kontak</div>
+    <h1 class="page-title">Pesan &<br><span>Kontak</span> Kami</h1>
+    <p class="page-sub">Isi form pemesanan dan kami akan menghubungi Anda segera. Lihat juga testimoni dari pelanggan kami.</p>
+  </div>
+</div>
+
+<!-- TESTIMONI -->
+<section class="testi-section">
+  <div class="testi-inner">
+    <div class="testi-top-row">
+      <div>
+        <div class="section-label reveal">Ulasan Pelanggan</div>
+        <h2 class="section-title reveal">Kata Mereka<br>Tentang Kami</h2>
+      </div>
+      <div class="score-block reveal">
+        <div class="score-big">5.0</div>
+        <div><div class="score-stars">★★★★★</div><div class="score-lbl">Dari 120+ ulasan</div></div>
+      </div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card reveal" style="transition-delay:0s">
+        <div class="testi-top"><div class="testi-avatar">👨‍💼</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Kualitas kabelnya luar biasa, crimping rapi dan sinyal sangat stabil. Harganya jauh lebih murah dibanding toko biasa. Pasti repeat order!</p>
+        <div class="testi-name">Budi Santoso</div><div class="testi-role">IT Support — Perusahaan Swasta, Jakarta</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.08s">
+        <div class="testi-top"><div class="testi-avatar">👩‍🔧</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Saya pesan 50 meter dengan panjang kustom berbeda-beda, semua dikerjakan dengan tepat. Pengiriman cepat, produk sampai dalam kondisi sempurna.</p>
+        <div class="testi-name">Sari Dewi</div><div class="testi-role">Teknisi Jaringan — Kontraktor IT, Surabaya</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.16s">
+        <div class="testi-top"><div class="testi-avatar">👨‍🏫</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Dipakai untuk lab komputer sekolah, sudah 6 bulan dan tidak ada masalah. Pelayanan ramah, harga sangat bersahabat untuk pembelian grosir.</p>
+        <div class="testi-name">Pak Rendra</div><div class="testi-role">Kepala Lab Komputer — SMA Negeri, Bandung</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.24s">
+        <div class="testi-top"><div class="testi-avatar">👨‍💻</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Response cepat, harga transparan, dan kabel langsung bisa dipakai tanpa masalah. Highly recommended untuk siapa pun yang butuh kabel jaringan!</p>
+        <div class="testi-name">Rizky Pratama</div><div class="testi-role">Freelance Network Engineer, Yogyakarta</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.32s">
+        <div class="testi-top"><div class="testi-avatar">👩‍💼</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Beli 20 pcs untuk kantor baru, semua kabel custom sesuai panjang yang diminta. Rapih, bersih, tidak ada yang cacat. Terima kasih CableMate!</p>
+        <div class="testi-name">Rina Hartati</div><div class="testi-role">Office Manager — Startup Tech, Bali</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:0.40s">
+        <div class="testi-top"><div class="testi-avatar">🧑‍🔬</div><div class="testi-stars">★★★★★</div></div>
+        <p class="testi-text">Sudah langganan 1 tahun. Setiap proyek instalasi jaringan selalu pakai CableMate. Kualitas konsisten, harga kompetitif, tidak pernah telat.</p>
+        <div class="testi-name">Agus Firmansyah</div><div class="testi-role">Kontraktor Instalasi Jaringan, Medan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM & KONTAK -->
+<section class="form-section">
+  <div class="form-inner">
+    <div class="section-label reveal">Hubungi Kami</div>
+    <h2 class="section-title reveal">Siap Pesan?<br>Kami Siap Melayani</h2>
+
+    <div class="form-kontak-grid">
+      <div class="reveal-l">
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-group"><label>Nama Lengkap *</label><input type="text" id="f-nama" placeholder="Nama Anda" /></div>
+            <div class="form-group"><label>Nomor WhatsApp *</label><input type="tel" id="f-wa" placeholder="08xxxxxxxxxx" /></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" id="f-email" placeholder="email@anda.com" /></div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Jenis Kabel *</label>
+              <select id="f-jenis"><option value="">Pilih jenis...</option><option>UTP Cat5e</option><option>UTP Cat6</option><option>UTP Cat6A</option></select>
+            </div>
+            <div class="form-group"><label>Total Panjang (meter) *</label><input type="number" id="f-panjang" placeholder="cth: 25" min="1" /></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Warna Kabel</label>
+              <select id="f-warna"><option value="">Pilih warna...</option><option>Orange</option><option>Biru</option><option>Hijau</option><option>Hitam</option><option>Abu-abu</option></select>
+            </div>
+            <div class="form-group">
+              <label>Tipe Krimping</label>
+              <select id="f-crimp"><option>Straight Through</option><option>Crossover</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label>Catatan Tambahan</label><textarea id="f-pesan" rows="3" placeholder="Detail pesanan, jumlah pcs, deadline, dll..."></textarea></div>
+          <button class="form-submit" onclick="kirimPesan()">🚀 Kirim & Lanjut ke WhatsApp</button>
+          <div class="form-success" id="form-success">✅ Permintaan terkirim! Mengarahkan ke WhatsApp...</div>
+        </div>
+      </div>
+
+      <div class="reveal-r">
+        <div class="info-side">
+          <div class="info-card">
+            <div class="info-icon">✉️</div>
+            <div><div class="info-title">Email</div><div class="info-val"><a href="mailto:CableMate@gmail.com">CableMate@gmail.com</a></div></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">💬</div>
+            <div><div class="info-title">WhatsApp</div><div class="info-val"><a href="https://wa.me/6282338267829">082338267829</a></div></div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">📸</div>
+            <div><div class="info-title">Instagram</div><div class="info-val"><a href="https://instagram.com/Cablemateantartika2" target="_blank">@Cablemateantartika2</a></div></div>
+          </div>
+          <div class="hours-card">
+            <div class="hours-title">Jam Operasional</div>
+            <div class="hours-row"><span class="day">Senin – Jumat</span><span class="time">08.00 – 20.00</span></div>
+            <div class="hours-row"><span class="day">Sabtu</span><span class="time">08.00 – 17.00</span></div>
+            <div class="hours-row"><span class="day">Minggu</span><span class="time">Libur</span></div>
+          </div>
+          <div class="info-note">
+            <span class="ni">⚡</span>
+            <p>Biasanya kami membalas dalam <strong>1–2 jam</strong> pada hari kerja.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Cable<span>Mate</span></div>
+      <p>Spesialis kabel LAN kustom untuk kebutuhan jaringan rumah, kantor, dan industri. Kualitas terjamin, harga bersahabat.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Halaman</h4>
+      <a href="index.html">🏠 Home</a>
+      <a href="produk.html">📦 Produk</a>
+      <a href="pesan.html">📋 Pesan / Kontak</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <a href="mailto:CableMate@gmail.com">✉️ CableMate@gmail.com</a>
+      <a href="https://wa.me/6282338267829">📱 082338267829</a>
+      <a href="https://instagram.com/Cablemateantartika2" target="_blank">📸 @Cablemateantartika2</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 <a href="index.html">CableMate Antartika</a>. All rights reserved.</span>
+    <span>Dibuat dengan ❤️ untuk jaringan yang lebih baik</span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => obs.observe(el));
+
+  function kirimPesan() {
+    const nama    = document.getElementById('f-nama').value.trim();
+    const wa      = document.getElementById('f-wa').value.trim();
+    const jenis   = document.getElementById('f-jenis').value;
+    const panjang = document.getElementById('f-panjang').value;
+    if (!nama || !wa || !jenis || !panjang) { alert('Harap isi semua kolom wajib (*) terlebih dahulu.'); return; }
+    const warna = document.getElementById('f-warna').value || '-';
+    const crimp = document.getElementById('f-crimp').value;
+    const email = document.getElementById('f-email').value || '-';
+    const pesan = document.getElementById('f-pesan').value || '-';
+    const msg = encodeURIComponent(
+      `Halo CableMate! Saya ingin memesan:\n\n` +
+      `👤 Nama     : ${nama}\n📧 Email    : ${email}\n` +
+      `📦 Jenis    : ${jenis}\n📏 Panjang  : ${panjang} meter\n` +
+      `🎨 Warna    : ${warna}\n🔧 Krimping : ${crimp}\n📝 Catatan  : ${pesan}`
+    );
+    document.getElementById('form-success').style.display = 'block';
+    setTimeout(() => window.open(`https://wa.me/6282338267829?text=${msg}`, '_blank'), 800);
+  }
+</script>
+</body>
+</html>
