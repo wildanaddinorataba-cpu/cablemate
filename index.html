@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CableMate — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --cream: #faf9f7; --light: #f3f2ef;
+      --border: #e8e5e0; --border2: #d0cdc7;
+      --text: #1a1917; --mid: #5a5854; --muted: #9a9692;
+      --accent: #e85d04; --accent-h: #cc4f00;
+      --accent-light: #fff4ee; --accent-gold: #fd8c00;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+      --r: 16px;
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--white); color: var(--text); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 68px;
+      background: rgba(255,255,255,0.93); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-logo { font-family: var(--font-d); font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 0.3rem; list-style: none; background: var(--light); padding: 0.3rem; border-radius: 100px; }
+    .nav-links a {
+      display: block; padding: 0.45rem 1.1rem; border-radius: 100px;
+      font-size: 0.84rem; font-weight: 600; color: var(--mid);
+      text-decoration: none; transition: all 0.22s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--white); }
+    .nav-links a.active { background: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(232,93,4,0.3); }
+    .nav-cta {
+      background: var(--text); color: var(--white); font-weight: 700; font-size: 0.84rem;
+      padding: 0.55rem 1.4rem; border-radius: 100px; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+      padding: 120px 6vw 80px;
+      background: var(--cream); position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, #c8c5be 1px, transparent 1px);
+      background-size: 32px 32px; opacity: 0.4; pointer-events: none;
+    }
+    #hero::after {
+      content: ''; position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,93,4,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-left { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent-light); border: 1px solid rgba(232,93,4,0.2);
+      color: var(--accent); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.8rem;
+      animation: fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.45rem; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .hero-title {
+      font-family: var(--font-d); font-size: clamp(3rem, 5.5vw, 5.2rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -1.5px;
+      animation: fadeUp 0.8s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); display: block; }
+    .hero-sub {
+      margin-top: 1.4rem; font-size: 1.05rem; color: var(--mid); line-height: 1.75; max-width: 420px;
+      animation: fadeUp 0.8s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 2.2rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .stat-num { font-family: var(--font-d); font-size: 1.8rem; font-weight: 800; }
+    .stat-num span { color: var(--accent); font-size: 1.1rem; }
+    .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; font-weight: 500; }
+    .hero-actions {
+      display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 2.2rem;
+      animation: fadeUp 0.8s 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .btn-fill {
+      background: var(--accent); color: #fff; font-weight: 700; font-size: 0.9rem;
+      padding: 0.8rem 2rem; border-radius: 100px; text-decoration: none; display: inline-block;
+      transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(232,93,4,0.3);
+    }
+    .btn-fill:hover { background: var(--accent-h); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1.5px solid var(--border2); color: var(--text); font-weight: 600; font-size: 0.9rem;
+      padding: 0.8rem 1.8rem; border-radius: 100px; text-decoration: none; display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-right {
+      position: relative; z-index: 1; display: flex; flex-direction: column; gap: 1.2rem;
+      animation: fadeRight 0.8s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-main-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 2.5rem 2rem; text-align: center;
+      box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+    }
+    .hero-main-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-gold));
+    }
+    .hero-icon { font-size: 6rem; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1)); }
+    .hero-card-sub { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 1rem; }
+    .mini-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+    .mini-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.1rem; text-align: center;
+      box-shadow: var(--shadow-sm); transition: transform 0.2s;
+    }
+    .mini-card:hover { transform: translateY(-3px); }
+    .mc-icon { font-size: 1.5rem; }
+    .mc-lbl { font-size: 0.7rem; color: var(--muted); font-weight: 500; margin: 0.3rem 0 0.1rem; }
+    .mc-val { font-family: var(--font-d); font-size: 1rem; font-weight: 800; color: var(--accent); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:none} }
+    @keyframes fadeRight { from{opacity:0;transform:translateX(28px)} to{opacity:1;transform:none} }
+
+    /* ── KEUNGGULAN ── */
+    #keunggulan { padding: 100px 6vw; background: var(--white); }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      font-weight: 700; color: var(--accent); margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; width: 20px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+    .slogan-bar {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--accent-light); border-left: 3px solid var(--accent);
+      padding: 0.8rem 1.4rem; border-radius: 0 8px 8px 0;
+      font-style: italic; font-size: 1rem; color: var(--accent); font-weight: 500; margin-top: 1rem;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 4rem;
+    }
+    .feature-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 2rem 1.8rem;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+    .feature-icon-wrap {
+      width: 52px; height: 52px; background: var(--white);
+      border: 1px solid var(--border); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.4rem; box-shadow: var(--shadow-sm);
+    }
+    .feature-title { font-family: var(--font-d); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .feature-desc { font-size: 0.88rem; color: var(--mid); line-height: 1.7; }
+    .feature-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-gold));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.35s;
+    }
+    .feature-card:hover::after { transform: scaleX(1); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: var(--text); color: var(--white);
+      padding: 80px 6vw; text-align: center;
+    }
+    .cta-banner h2 { font-family: var(--font-d); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -1px; margin-bottom: 1rem; }
+    .cta-banner p { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+    .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-gold { background: var(--accent-gold); color: #fff; font-weight: 700; font-size: 0.9rem; padding: 0.85rem 2.2rem; border-radius: 100px; text-decoration: none; transition: opacity 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(253,140,0,0.35); display: inline-block; }
+    .btn-gold:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-white { background: rgba(255,255,255,0.1); color: #fff; border: 1.5px solid rgba(255,255,255,0.25); font-weight: 600; font-size: 0.9rem; padding: 0.85rem 2rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; display: inline-block; }
+    .btn-white:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── FOOTER ── */
+    footer { background: #111; color: var(--white); padding: 48px 6vw 28px; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-logo { font-family: var(--font-d); font-size: 1.5rem; font-weight: 900; }
+    .footer-logo span { color: var(--accent-gold); }
+    .footer-brand p { margin-top: 0.7rem; font-size: 0.86rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.1rem; font-weight: 700; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.86rem; margin-bottom: 0.6rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent-gold); }
+    .footer-bottom { padding-top: 1.6rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.28); }
+    .footer-bottom a { color: var(--accent-gold); text-decoration: none; }
+
+    @media (max-width: 960px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Cable<span>Mate</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">🏠 Home</a></li>
+    <li><a href="produk.html">📦 Produk</a></li>
+    <li><a href="pesan.html">📋 Pesan</a></li>
+  </ul>
+  <a href="pesan.html" class="nav-cta">Pesan Sekarang</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Custom LAN Cable Specialist</div>
+    <h1 class="hero-title">Kabel LAN<br><em>Kustom</em>Untuk Anda</h1>
+    <p class="hero-sub">Solusi jaringan yang presisi — panjang, warna, dan konektor sesuai permintaan. Dibuat profesional, dikirim cepat, harga bersahabat.</p>
+    <div class="hero-stats">
+      <div><div class="stat-num">500<span>+</span></div><div class="stat-lbl">Pelanggan Puas</div></div>
+      <div><div class="stat-num">1<span> Gbps</span></div><div class="stat-lbl">Kecepatan Max</div></div>
+      <div><div class="stat-num">24<span> jam</span></div><div class="stat-lbl">Pengerjaan Cepat</div></div>
+    </div>
+    <div class="hero-actions">
+      <a href="produk.html" class="btn-fill">Lihat Produk →</a>
+      <a href="pesan.html" class="btn-outline">Pesan Sekarang</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-main-card">
+      <div class="hero-icon">🔌</div>
+      <div class="hero-card-sub">Custom LAN Cable — Cat6</div>
+    </div>
+    <div class="mini-cards">
+      <div class="mini-card"><div class="mc-icon">📏</div><div class="mc-lbl">Panjang</div><div class="mc-val">Custom</div></div>
+      <div class="mini-card"><div class="mc-icon">💰</div><div class="mc-lbl">Mulai</div><div class="mc-val">Rp5rb/m</div></div>
+      <div class="mini-card"><div class="mc-icon">🛡️</div><div class="mc-lbl">Garansi</div><div class="mc-val">Ganti Baru</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section id="keunggulan">
+  <div class="section-label reveal">Mengapa Memilih Kami</div>
+  <h2 class="section-title reveal">Performa Jaringan<br>Tanpa Kompromi</h2>
+  <div class="slogan-bar reveal">✦ Buat pekerjaan semakin mudah dan efisien</div>
+  <div class="features-grid">
+    <div class="feature-card reveal" style="transition-delay:0s">
+      <div class="feature-icon-wrap">💰</div>
+      <div class="feature-title">Harga Terjangkau</div>
+      <p class="feature-desc">Langsung dari tangan pertama tanpa biaya tambahan. Makin banyak pesan, makin hemat — tersedia harga grosir.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.08s">
+      <div class="feature-icon-wrap">📏</div>
+      <div class="feature-title">Panjang Custom</div>
+      <p class="feature-desc">Dari 0.5 meter hingga ratusan meter, dipesan sesuai kebutuhan. Tidak ada kabel sisa yang terbuang sia-sia.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.16s">
+      <div class="feature-icon-wrap">⚡</div>
+      <div class="feature-title">Kualitas Premium</div>
+      <p class="feature-desc">Tembaga murni berkualitas tinggi dengan konektor RJ45 gold-plated. Sinyal stabil, minim gangguan sepanjang waktu.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.24s">
+      <div class="feature-icon-wrap">🎨</div>
+      <div class="feature-title">Warna Bervariasi</div>
+      <p class="feature-desc">Pilihan warna lengkap: orange, biru, hijau, hitam, abu-abu. Memudahkan identifikasi jalur jaringan di lapangan.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.32s">
+      <div class="feature-icon-wrap">⏱️</div>
+      <div class="feature-title">Pengerjaan Cepat</div>
+      <p class="feature-desc">Proses crimping profesional dan pengiriman ekspres. Pesanan kecil selesai dalam 1×24 jam kerja.</p>
+    </div>
+    <div class="feature-card reveal" style="transition-delay:0.40s">
+      <div class="feature-icon-wrap">🛡️</div>
+      <div class="feature-title">Garansi Produk</div>
+      <p class="feature-desc">Setiap kabel diuji sebelum dikirim. Bergaransi penggantian penuh jika ada cacat produksi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Siap Memulai?</h2>
+  <p>Dapatkan kabel LAN kustom berkualitas tinggi dengan harga terbaik</p>
+  <div class="cta-group">
+    <a href="produk.html" class="btn-gold">📦 Lihat Produk & Harga</a>
+    <a href="pesan.html" class="btn-white">📋 Pesan Sekarang</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Cable<span>Mate</span></div>
+      <p>Spesialis kabel LAN kustom untuk kebutuhan jaringan rumah, kantor, dan industri. Kualitas terjamin, harga bersahabat.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Halaman</h4>
+      <a href="index.html">🏠 Home</a>
+      <a href="produk.html">📦 Produk</a>
+      <a href="pesan.html">📋 Pesan / Kontak</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <a href="mailto:CableMate@gmail.com">✉️ CableMate@gmail.com</a>
+      <a href="https://wa.me/6282338267829">📱 082338267829</a>
+      <a href="https://instagram.com/Cablemateantartika2" target="_blank">📸 @Cablemateantartika2</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 <a href="index.html">CableMate Antartika</a>. All rights reserved.</span>
+    <span>Dibuat dengan ❤️ untuk jaringan yang lebih baik</span>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CableMate — Produk & Harga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --cream: #faf9f7; --light: #f3f2ef;
+      --border: #e8e5e0; --border2: #d0cdc7;
+      --text: #1a1917; --mid: #5a5854; --muted: #9a9692;
+      --accent: #e85d04; --accent-h: #cc4f00;
+      --accent-light: #fff4ee; --accent-gold: #fd8c00;
+      --green: #2d6a4f; --green-light: #edf7f2;
+      --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-md: 0 8px 32px rgba(0,0,0,0.10);
+      --r: 16px;
+      --font-d: 'Playfair Display', serif;
+      --font-b: 'Plus Jakarta Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-b); background: var(--white); color: var(--text); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw; height: 68px;
+      background: rgba(255,255,255,0.93); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: var(--font-d); font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px; text-decoration: none; color: var(--text); }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 0.3rem; list-style: none; background: var(--light); padding: 0.3rem; border-radius: 100px; }
+    .nav-links a { display: block; padding: 0.45rem 1.1rem; border-radius: 100px; font-size: 0.84rem; font-weight: 600; color: var(--mid); text-decoration: none; transition: all 0.22s; }
+    .nav-links a:hover { color: var(--text); background: var(--white); }
+    .nav-links a.active { background: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(232,93,4,0.3); }
+    .nav-cta { background: var(--text); color: var(--white); font-weight: 700; font-size: 0.84rem; padding: 0.55rem 1.4rem; border-radius: 100px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: var(--cream); padding: 120px 6vw 60px;
+      position: relative; overflow: hidden;
+    }
+    .page-header::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, #c8c5be 1px, transparent 1px);
+      background-size: 32px 32px; opacity: 0.4; pointer-events: none;
+    }
+    .page-header::after {
+      content: ''; position: absolute; bottom: -80px; right: -80px;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(232,93,4,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-header-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+    .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .page-title { font-family: var(--font-d); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 900; letter-spacing: -1.5px; }
+    .page-title span { color: var(--accent); font-style: italic; }
+    .page-sub { font-size: 1rem; color: var(--mid); margin-top: 0.8rem; max-width: 480px; line-height: 1.7; }
+
+    /* ── MAIN CONTENT ── */
+    .content { padding: 60px 6vw; max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase;
+      font-weight: 700; color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .section-label::before { content: ''; width: 20px; height: 2px; background: var(--accent); border-radius: 2px; }
+    .section-title { font-family: var(--font-d); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -1px; line-height: 1.15; }
+
+    /* ── PRODUCT DETAIL ── */
+    .product-detail {
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 4rem; align-items: start; margin-top: 3rem;
+    }
+
+    .prod-gallery {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 2.5rem; text-align: center;
+      position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
+    }
+    .prod-gallery::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-gold)); }
+    .prod-badge { position: absolute; top: 1.2rem; right: 1.2rem; background: var(--accent); color: #fff; font-size: 0.68rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 100px; }
+    .prod-big-icon { font-size: 7.5rem; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.1)); }
+    .prod-img-lbl { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-top: 1rem; }
+    .thumb-row { display: flex; gap: 0.7rem; justify-content: center; margin-top: 1.2rem; }
+    .thumb { width: 56px; height: 56px; background: var(--white); border: 2px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+    .thumb:hover { transform: scale(1.06); }
+    .thumb.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,93,4,0.12); }
+
+    .prod-name { font-family: var(--font-d); font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; }
+    .prod-tag { font-size: 0.92rem; color: var(--mid); margin-top: 0.4rem; }
+    .rating-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; }
+    .stars { color: #f59e0b; font-size: 0.9rem; }
+    .rating-txt { font-size: 0.82rem; color: var(--muted); }
+    .divider { width: 100%; height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+    .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .spec-item { background: var(--cream); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.1rem; }
+    .spec-k { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+    .spec-v { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-top: 0.2rem; }
+    .spec-v.ac { color: var(--accent); }
+
+    .price-block { background: var(--text); color: var(--white); border-radius: var(--r); padding: 1.5rem 1.8rem; margin-top: 1.6rem; display: flex; align-items: center; justify-content: space-between; }
+    .price-from { font-size: 0.7rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 1px; }
+    .price-num { font-family: var(--font-d); font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); }
+    .price-sub { font-size: 0.76rem; opacity: 0.45; margin-top: 0.1rem; }
+
+    .cta-row { display: flex; gap: 0.8rem; margin-top: 1.3rem; }
+    .btn-order { flex: 1; background: var(--accent); color: #fff; font-weight: 700; font-size: 0.9rem; padding: 0.95rem; border-radius: 12px; text-align: center; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+    .btn-order:hover { background: var(--accent-h); transform: translateY(-1px); }
+    .btn-wa { background: #22c55e; color: #fff; font-weight: 700; font-size: 0.9rem; padding: 0.95rem 1.4rem; border-radius: 12px; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: background 0.2s, transform 0.2s; }
+    .btn-wa:hover { background: #16a34a; transform: translateY(-1px); }
+
+    /* ── KALKULATOR ── */
+    .calc-section { background: var(--cream); padding: 80px 6vw; margin-top: 40px; }
+    .calc-inner { max-width: 1200px; margin: 0 auto; }
+    .calc-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: start; }
+
+    .card-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 2.2rem; box-shadow: var(--shadow-sm); }
+    .card-box h3 { font-family: var(--font-d); font-size: 1.15rem; margin-bottom: 1.8rem; }
+    .input-group { margin-bottom: 1.3rem; }
+    .input-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--mid); margin-bottom: 0.45rem; }
+    .input-group input, .input-group select { width: 100%; padding: 0.8rem 1rem; border: 1.5px solid var(--border); border-radius: 10px; font-family: var(--font-b); font-size: 0.9rem; color: var(--text); background: var(--cream); transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
+    .input-group input:focus, .input-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,93,4,0.09); }
+    .range-wrap { position: relative; margin-top: 0.5rem; }
+    .range-val { position: absolute; right: 0; top: -22px; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+    .range-wrap input[type="range"] { width: 100%; height: 5px; background: var(--border); border-radius: 10px; padding: 0; cursor: pointer; accent-color: var(--accent); border: none; box-shadow: none; }
+
+    .calc-result { background: var(--text); color: var(--white); border-radius: var(--r); padding: 1.6rem; margin-top: 1.4rem; }
+    .res-label { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.5; margin-bottom: 0.3rem; }
+    .res-price { font-family: var(--font-d); font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); }
+    .res-note { font-size: 0.76rem; opacity: 0.45; margin-top: 0.2rem; }
+    .breakdown { margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.9rem; }
+    .brow { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem; opacity: 0.7; }
+    .brow.total { font-weight: 700; opacity: 1; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.45rem; margin-top: 0.2rem; }
+
+    .price-table-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .ptable-head { background: var(--text); color: var(--white); padding: 1rem 1.5rem; font-family: var(--font-d); font-size: 1rem; }
+    .ptable-head span { color: var(--accent-gold); }
+    table { width: 100%; border-collapse: collapse; }
+    tr { border-bottom: 1px solid var(--border); }
+    tr:last-child { border: none; }
+    td { padding: 0.82rem 1.5rem; font-size: 0.86rem; color: var(--mid); }
+    td:first-child { font-weight: 600; color: var(--text); }
+    td:last-child { color: var(--accent); font-weight: 700; text-align: right; }
+    tr:nth-child(even) td { background: var(--cream); }
+    .info-note { background: var(--green-light); border: 1px solid rgba(45,106,79,0.18); border-radius: 10px; padding: 1rem 1.2rem; margin-top: 1rem; display: flex; gap: 0.7rem; }
+    .info-note .ni { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .info-note p { font-size: 0.8rem; color: var(--green); line-height: 1.6; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-l { opacity: 0; transform: translateX(-28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal-r { opacity: 0; transform: translateX(28px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible, .reveal-l.visible, .reveal-r.visible { opacity: 1; transform: none; }
+
+    /* ── FOOTER ── */
+    footer { background: #111; color: var(--white); padding: 48px 6vw 28px; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-logo { font-family: var(--font-d); font-size: 1.5rem; font-weight: 900; }
+    .footer-logo span { color: var(--accent-gold); }
+    .footer-brand p { margin-top: 0.7rem; font-size: 0.86rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 240px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.1rem; font-weight: 700; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.86rem; margin-bottom: 0.6rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--accent-gold); }
+    .footer-bottom { padding-top: 1.6rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.28); }
+    .footer-bottom a { color: var(--accent-gold); text-decoration: none; }
+
+    .btn-fill { background: var(--accent); color: #fff; font-weight: 700; font-size: 0.9rem; padding: 0.85rem 2rem; border-radius: 12px; text-decoration: none; display: inline-block; transition: background 0.2s; margin-top: 1.2rem; width: 100%; text-align: center; }
+    .btn-fill:hover { background: var(--accent-h); }
+
+    @media (max-width: 960px) {
+      .product-detail { grid-template-columns: 1fr; }
+      .calc-wrap { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .spec-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Cable<span>Mate</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="produk.html" class="active">📦 Produk</a></li>
+    <li><a href="pesan.html">📋 Pesan</a></li>
+  </ul>
+  <a href="pesan.html" class="nav-cta">Pesan Sekarang</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> › Produk</div>
+    <h1 class="page-title">Detail <span>Produk</span> &<br>Kalkulator Harga</h1>
+    <p class="page-sub">Lihat spesifikasi lengkap dan hitung estimasi biaya kabel LAN kustom Anda secara otomatis.</p>
+  </div>
+</div>
+
+<!-- PRODUK DETAIL -->
+<div class="content">
+  <div class="section-label reveal">Etalase Produk</div>
+  <h2 class="section-title reveal">Satu Produk, Banyak Solusi</h2>
+
+  <div class="product-detail">
+    <div class="reveal-l">
+      <div class="prod-gallery">
+        <div class="prod-badge">Best Seller</div>
+        <div class="prod-big-icon">🔌</div>
+        <div class="prod-img-lbl">Custom LAN Cable — Cat6</div>
+      </div>
+  
+    </div>
+
+    <div class="reveal-r">
+      <div class="prod-name">Custom LAN Cable</div>
+      <p class="prod-tag">Kabel UTP Cat6 — Crimping Kustom Profesional</p>
+      <div class="rating-row">
+        <span class="stars">★★★★★</span>
+        <span class="rating-txt">5.0 · 120+ ulasan</span>
+      </div>
+      <div class="divider"></div>
+      <div class="spec-grid">
+        <div class="spec-item"><div class="spec-k">Kategori</div><div class="spec-v">UTP Cat6 / Cat5e</div></div>
+        <div class="spec-item"><div class="spec-k">Kecepatan Max</div><div class="spec-v ac">1 Gbps</div></div>
+        <div class="spec-item"><div class="spec-k">Panjang</div><div class="spec-v">0.5m — Tak Terbatas</div></div>
+        <div class="spec-item"><div class="spec-k">Konektor</div><div class="spec-v">RJ45 Gold-Plated</div></div>
+        <div class="spec-item"><div class="spec-k">Pilihan Warna</div><div class="spec-v">5 Warna</div></div>
+        <div class="spec-item"><div class="spec-k">Tipe Krimping</div><div class="spec-v">Straight / Crossover</div></div>
+        <div class="spec-item" style="grid-column:span 2"><div class="spec-k">Garansi</div><div class="spec-v ac">✓ Garansi Ganti Baru</div></div>
+      </div>
+      <div class="price-block">
+        <div>
+          <div class="price-from">Harga Mulai</div>
+          <div class="price-num">Rp 5.000</div>
+          <div class="price-sub">per meter · harga grosir tersedia</div>
+        </div>
+        <div style="font-size:2.5rem">🏷️</div>
+      </div>
+      <div class="cta-row">
+        <a href="pesan.html" class="btn-order">📋 Minta Penawaran</a>
+        <a href="https://wa.me/6282338267829" class="btn-wa" target="_blank">💬 WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KALKULATOR -->
+<div class="calc-section">
+  <div class="calc-inner">
+    <div class="section-label reveal">Tools</div>
+    <h2 class="section-title reveal">Kalkulator Harga Otomatis</h2>
+
+    <div class="calc-wrap">
+      <div class="reveal-l">
+        <div class="card-box">
+          <h3>⚙️ Konfigurasi Kabel</h3>
+          <div class="input-group">
+            <label>Kategori Kabel</label>
+            <select id="calc-cat" onchange="hitungHarga()">
+              <option value="5000">UTP Cat5e — Rp 5.000/m</option>
+              <option value="7000" selected>UTP Cat6 — Rp 7.000/m</option>
+              <option value="12000">UTP Cat6A — Rp 12.000/m</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Panjang Kabel (meter)</label>
+            <div class="range-wrap">
+              <span class="range-val" id="range-label">10 m</span>
+              <input type="range" id="calc-len" min="1" max="200" value="10" oninput="syncLen(this.value)">
+            </div>
+            <input type="number" id="calc-len-num" min="1" value="10" placeholder="Atau ketik panjang..." style="margin-top:0.75rem" oninput="syncLen(this.value)">
+          </div>
+          <div class="input-group">
+            <label>Jumlah Kabel (pcs)</label>
+            <input type="number" id="calc-qty" min="1" value="1" oninput="hitungHarga()">
+          </div>
+          <div class="input-group">
+            <label>Tipe Krimping</label>
+            <select id="calc-crimp" onchange="hitungHarga()">
+              <option value="0">Straight Through (Gratis)</option>
+              <option value="2000">Crossover (+Rp 2.000/pc)</option>
+            </select>
+          </div>
+          <div class="calc-result">
+            <div class="res-label">Total Estimasi</div>
+            <div class="res-price" id="res-price">Rp 70.000</div>
+            <div class="res-note">*Belum termasuk ongkos kirim</div>
+            <div class="breakdown">
+              <div class="brow"><span>Harga kabel</span><span id="b-cable">Rp 70.000</span></div>
+              <div class="brow"><span>Biaya krimping</span><span id="b-crimp">Gratis</span></div>
+              <div class="brow total"><span>Total</span><span id="b-total">Rp 70.000</span></div>
+            </div>
+          </div>
+          <a href="pesan.html" class="btn-fill">📋 Pesan Dengan Spesifikasi Ini</a>
+        </div>
+      </div>
+
+      <div class="reveal-r">
+        <div class="price-table-card">
+          <div class="ptable-head">📊 Daftar Harga <span>Per Meter</span></div>
+          <table>
+            <tr><td>UTP Cat5e</td><td>Rp 5.000/m</td></tr>
+            <tr><td>UTP Cat6</td><td>Rp 7.000/m</td></tr>
+            <tr><td>UTP Cat6A</td><td>Rp 12.000/m</td></tr>
+            <tr><td>Krimping Straight</td><td>Gratis</td></tr>
+            <tr><td>Krimping Crossover</td><td>+Rp 2.000/pc</td></tr>
+          </table>
+        </div>
+        <div class="info-note">
+          <span class="ni">💡</span>
+          <p>Untuk pesanan <strong>≥ 50 meter</strong> atau <strong>≥ 10 pcs</strong>, hubungi kami untuk penawaran harga grosir yang lebih hemat.</p>
+        </div>
+        <div class="info-note" style="margin-top:0.8rem">
+          <span class="ni">🚚</span>
+          <p>Pengiriman ke seluruh Indonesia via JNE, J&T, SiCepat. Ongkir dihitung berdasarkan berat dan lokasi tujuan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Cable<span>Mate</span></div>
+      <p>Spesialis kabel LAN kustom untuk kebutuhan jaringan rumah, kantor, dan industri.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Halaman</h4>
+      <a href="index.html">🏠 Home</a>
+      <a href="produk.html">📦 Produk</a>
+      <a href="pesan.html">📋 Pesan / Kontak</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kontak</h4>
+      <a href="mailto:CableMate@gmail.com">✉️ CableMate@gmail.com</a>
+      <a href="https://wa.me/6282338267829">📱 082338267829</a>
+      <a href="https://instagram.com/Cablemateantartika2" target="_blank">📸 @Cablemateantartika2</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 <a href="index.html">CableMate Antartika</a>. All rights reserved.</span>
+    <span>Dibuat dengan ❤️ untuk jaringan yang lebih baik</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.thumb-row .thumb').forEach(t => {
+    t.addEventListener('click', () => {
+      t.closest('.thumb-row').querySelectorAll('.thumb').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => obs.observe(el));
+
+  function fmt(n) { return 'Rp ' + n.toLocaleString('id-ID'); }
+  function syncLen(val) {
+    val = parseInt(val) || 1;
+    document.getElementById('calc-len').value = Math.min(val, 200);
+    document.getElementById('calc-len-num').value = val;
+    document.getElementById('range-label').textContent = val + ' m';
+    hitungHarga();
+  }
+  function hitungHarga() {
+    const harga = parseInt(document.getElementById('calc-cat').value);
+    const panjang = parseInt(document.getElementById('calc-len-num').value) || 1;
+    const qty = parseInt(document.getElementById('calc-qty').value) || 1;
+    const crimp = parseInt(document.getElementById('calc-crimp').value);
+    const biayaKabel = harga * panjang * qty;
+    const biayaCrimp = crimp * qty;
+    const total = biayaKabel + biayaCrimp;
+    document.getElementById('res-price').textContent = fmt(total);
+    document.getElementById('b-cable').textContent = fmt(biayaKabel);
+    document.getElementById('b-crimp').textContent = crimp > 0 ? fmt(biayaCrimp) : 'Gratis';
+    document.getElementById('b-total').textContent = fmt(total);
+  }
+  hitungHarga();
+</script>
+</body>
+</html>
